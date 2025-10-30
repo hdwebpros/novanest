@@ -1,4 +1,97 @@
 <script setup lang="ts">
+import { z } from "zod";
+
+// Dialog state
+const isOfferDialogOpen = ref(false);
+
+// Form data
+const formData = ref({
+  name: "",
+  phone: "",
+  email: "",
+  address: "",
+  city: "",
+  state: "",
+  zip: "",
+  propertyCondition: "",
+  reasonForSelling: "",
+  moveTimeline: "",
+  desiredOffer: "",
+  inquiry: "",
+  pictures: null as FileList | null,
+});
+
+// Form validation schema (for reference)
+const formSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
+  email: z.string().email("Please enter a valid email address"),
+  address: z.string().min(5, "Please enter your property address"),
+  city: z.string().min(2, "Please enter your city"),
+  state: z.string().min(2, "Please select your state"),
+  zip: z.string().regex(/^\d{5}(-\d{4})?$/, "Please enter a valid ZIP code"),
+  propertyCondition: z.string().min(1, "Please select the condition of your property"),
+  reasonForSelling: z.string().min(1, "Please select your reason for selling"),
+  moveTimeline: z.string().min(1, "Please select your preferred timeline"),
+  desiredOffer: z.string().min(1, "Please enter your desired offer amount"),
+  inquiry: z.string().optional(),
+  pictures: z.any().optional(),
+});
+
+// Form submission handler
+const onSubmitOffer = () => {
+  try {
+    const validated = formSchema.parse(formData.value);
+    console.log("Form submitted:", validated);
+    isOfferDialogOpen.value = false;
+    // Reset form
+    formData.value = {
+      name: "",
+      phone: "",
+      email: "",
+      address: "",
+      city: "",
+      state: "",
+      zip: "",
+      propertyCondition: "",
+      reasonForSelling: "",
+      moveTimeline: "",
+      desiredOffer: "",
+      inquiry: "",
+      pictures: null,
+    };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      alert(`Please fix the following errors:\n${error.errors.map(e => `- ${e.message}`).join('\n')}`);
+    }
+  }
+};
+
+// File validation helper
+const handleFileChange = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  const files = target.files;
+
+  if (files && files.length > 10) {
+    alert('Maximum 10 images allowed');
+    target.value = '';
+    return;
+  }
+
+  if (files) {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file && file.size > 5 * 1024 * 1024) {
+        alert('Each image must be less than 5MB');
+        target.value = '';
+        return;
+      }
+    }
+  }
+
+  formData.value.pictures = files;
+};
+
 const features = [
   {
     title: "Quick Cash Offers",
@@ -80,7 +173,9 @@ const testimonials = [
             class="text-white text-sm font-semibold uppercase hover:opacity-80"
             >Contact</a
           >
-          <button class="btn-dark">Get my offer</button>
+          <button class="btn-dark" @click="isOfferDialogOpen = true">
+            Get my offer
+          </button>
         </div>
       </nav>
 
@@ -122,7 +217,9 @@ const testimonials = [
 
             <!-- CTA Buttons -->
             <div class="flex gap-3.5">
-              <button class="btn-primary">Get my offer</button>
+              <button class="btn-primary" @click="isOfferDialogOpen = true">
+                Get my offer
+              </button>
               <button class="btn-secondary">See how it works</button>
             </div>
           </div>
@@ -253,7 +350,9 @@ const testimonials = [
           </div>
         </div>
 
-        <button class="btn-primary">Get my offer</button>
+        <button class="btn-primary" @click="isOfferDialogOpen = true">
+          Get my offer
+        </button>
       </div>
     </section>
 
@@ -397,6 +496,7 @@ const testimonials = [
           </p>
           <button
             class="px-4 py-2 bg-pink-600 text-white rounded-full font-semibold text-sm uppercase hover:bg-pink-600/90"
+            @click="isOfferDialogOpen = true"
           >
             Get my offer
           </button>
@@ -522,7 +622,9 @@ const testimonials = [
 
         <!-- Right Footer -->
         <div class="flex flex-col gap-6">
-          <button class="btn-gradient">Get my offer</button>
+          <button class="btn-gradient" @click="isOfferDialogOpen = true">
+            Get my offer
+          </button>
         </div>
       </div>
 
@@ -534,5 +636,228 @@ const testimonials = [
         </p>
       </div>
     </footer>
+
+    <!-- Offer Request Dialog -->
+    <Dialog v-model:open="isOfferDialogOpen">
+      <DialogScrollContent class="max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>Get Your Cash Offer</DialogTitle>
+          <DialogDescription>
+            Fill out the form below and we'll get back to you with a fair cash
+            offer for your property.
+          </DialogDescription>
+        </DialogHeader>
+
+        <form @submit.prevent="onSubmitOffer" class="space-y-6">
+          <!-- Personal Information -->
+          <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Personal Information</h3>
+
+            <div class="space-y-2">
+              <Label>Full Name *</Label>
+              <Input
+                v-model="formData.name"
+                type="text"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-2">
+                <Label>Phone Number *</Label>
+                <Input
+                  v-model="formData.phone"
+                  type="tel"
+                  placeholder="(555) 123-4567"
+                  required
+                />
+              </div>
+
+              <div class="space-y-2">
+                <Label>Email Address *</Label>
+                <Input
+                  v-model="formData.email"
+                  type="email"
+                  placeholder="john@example.com"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Property Address -->
+          <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Property Address</h3>
+
+            <div class="space-y-2">
+              <Label>Street Address *</Label>
+              <Input
+                v-model="formData.address"
+                type="text"
+                placeholder="123 Main Street"
+                required
+              />
+            </div>
+
+            <div class="grid grid-cols-3 gap-4">
+              <div class="space-y-2">
+                <Label>City *</Label>
+                <Input
+                  v-model="formData.city"
+                  type="text"
+                  placeholder="Simi Valley"
+                  required
+                />
+              </div>
+
+              <div class="space-y-2">
+                <Label>State *</Label>
+                <Select v-model="formData.state" required>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select state" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="CA">California</SelectItem>
+                    <SelectItem value="AZ">Arizona</SelectItem>
+                    <SelectItem value="NV">Nevada</SelectItem>
+                    <SelectItem value="OR">Oregon</SelectItem>
+                    <SelectItem value="WA">Washington</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div class="space-y-2">
+                <Label>ZIP Code *</Label>
+                <Input
+                  v-model="formData.zip"
+                  type="text"
+                  placeholder="93065"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Property & Selling Details -->
+          <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Property & Selling Details</h3>
+
+            <div class="space-y-2">
+              <Label>Condition of Property *</Label>
+              <Select v-model="formData.propertyCondition" required>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select condition" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="excellent">Excellent - Move-in ready</SelectItem>
+                  <SelectItem value="good">Good - Minor repairs needed</SelectItem>
+                  <SelectItem value="fair">Fair - Some repairs needed</SelectItem>
+                  <SelectItem value="poor">Poor - Major repairs needed</SelectItem>
+                  <SelectItem value="needs-demolition">Needs significant work/demolition</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div class="space-y-2">
+              <Label>Reason for Selling *</Label>
+              <Select v-model="formData.reasonForSelling" required>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select reason" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="foreclosure">Facing foreclosure</SelectItem>
+                  <SelectItem value="landlord">Tired of being a landlord</SelectItem>
+                  <SelectItem value="inherited">Inherited/probate property</SelectItem>
+                  <SelectItem value="taxes">Back taxes or liens</SelectItem>
+                  <SelectItem value="relocating">Moving/relocating</SelectItem>
+                  <SelectItem value="repairs">Too many repairs needed</SelectItem>
+                  <SelectItem value="quick-sale">Want a quick sale</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div class="space-y-2">
+              <Label>How Soon Do You Want to Move? *</Label>
+              <Select v-model="formData.moveTimeline" required>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select timeline" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="immediately">Immediately (within 2 weeks)</SelectItem>
+                  <SelectItem value="1-month">1 month</SelectItem>
+                  <SelectItem value="2-3-months">2-3 months</SelectItem>
+                  <SelectItem value="3-6-months">3-6 months</SelectItem>
+                  <SelectItem value="flexible">Flexible/Not sure</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div class="space-y-2">
+              <Label>Desired Offer Amount *</Label>
+              <Input
+                v-model="formData.desiredOffer"
+                type="text"
+                placeholder="$500,000"
+                required
+              />
+              <p class="text-sm text-muted-foreground">
+                Enter your desired cash offer amount or "Market Value" if unsure
+              </p>
+            </div>
+          </div>
+
+          <!-- Additional Information -->
+          <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Additional Information</h3>
+
+            <div class="space-y-2">
+              <Label>Comments or Questions (Optional)</Label>
+              <Textarea
+                v-model="formData.inquiry"
+                placeholder="Tell us anything else we should know about your property or situation..."
+                class="min-h-[100px]"
+              />
+            </div>
+
+            <div class="space-y-2">
+              <Label>Upload Property Pictures (Optional)</Label>
+              <Input
+                type="file"
+                accept="image/*"
+                multiple
+                @change="handleFileChange"
+              />
+              <p class="text-sm text-muted-foreground">
+                Max 10 images, 5MB each. Supported formats: JPG, PNG, HEIC
+              </p>
+            </div>
+          </div>
+
+          <!-- Disclaimer -->
+          <div class="bg-muted p-4 rounded-lg">
+            <p class="text-sm text-muted-foreground">
+              <strong>Privacy Guarantee:</strong> We respect your privacy and will never
+              sell, rent, or share your personal information with third parties. Your
+              information will only be used to provide you with a fair cash offer for
+              your property.
+            </p>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex justify-end gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              @click="isOfferDialogOpen = false"
+            >
+              Cancel
+            </Button>
+            <Button type="submit">Submit Request</Button>
+          </div>
+        </form>
+      </DialogScrollContent>
+    </Dialog>
   </div>
 </template>
