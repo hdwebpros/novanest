@@ -8,6 +8,17 @@
   --color-brand-ivory: #fcf9ea;
   --color-brand-gray: #7c7a6b;
   --color-brand-pink: #e93f83;
+
+  /* Landing page colors - mapped to standard Tailwind color names */
+  --color-pink-950: #270010;
+  --color-pink-600: #ee2a7b;
+  --color-pink-500: #ef3f8a;
+  --color-rose-300: #f893bb;
+  --color-orange-100: #f8f3d5;
+  --color-yellow-500: #f0b504;
+  --color-zinc-950: #090908;
+  --color-stone-900: #270010;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -45,6 +56,10 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --font-display: "Poppins", "sans-serif";
+
+  /* Landing page fonts */
+  --font-heading: "Lora", serif;
+  --font-body: "Poppins", sans-serif;
 }
 
 :root {
@@ -132,5 +147,37 @@
 
   .animate-in.visible {
     @apply opacity-100 translate-y-0;
+  }
+}
+
+@layer components {
+  /* Landing page specific components */
+  .gradient-hero {
+    background: linear-gradient(to left, #f893bb, #ee2a7b);
+  }
+
+  .gradient-footer {
+    background: linear-gradient(to left, #270010, #090908, #270010);
+  }
+
+  .card-base {
+    @apply bg-orange-100/40 rounded-2xl border border-pink-600/10 p-6;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-orange-100 text-pink-500 rounded-full font-semibold text-sm uppercase hover:bg-orange-100/90 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 rounded-full border border-orange-100 text-orange-100 font-semibold text-sm uppercase hover:bg-orange-100/10 transition-colors;
+  }
+
+  .btn-dark {
+    @apply px-4 py-2 bg-stone-900 text-white rounded-full font-semibold text-sm uppercase hover:bg-stone-900/90 transition-colors;
+  }
+
+  .btn-gradient {
+    @apply px-6 py-2 text-white rounded-full font-semibold text-sm uppercase hover:opacity-90 transition-opacity;
+    background: linear-gradient(to left, #f893bb, #ee2a7b);
   }
 }
