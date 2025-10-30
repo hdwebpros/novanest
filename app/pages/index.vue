@@ -1,10 +1,93 @@
 <script setup lang="ts">
 import { z } from "zod";
 
-// Dialog state
+// Constants
+const US_STATES = [
+  { value: "AL", label: "Alabama" },
+  { value: "AK", label: "Alaska" },
+  { value: "AZ", label: "Arizona" },
+  { value: "AR", label: "Arkansas" },
+  { value: "CA", label: "California" },
+  { value: "CO", label: "Colorado" },
+  { value: "CT", label: "Connecticut" },
+  { value: "DE", label: "Delaware" },
+  { value: "FL", label: "Florida" },
+  { value: "GA", label: "Georgia" },
+  { value: "HI", label: "Hawaii" },
+  { value: "ID", label: "Idaho" },
+  { value: "IL", label: "Illinois" },
+  { value: "IN", label: "Indiana" },
+  { value: "IA", label: "Iowa" },
+  { value: "KS", label: "Kansas" },
+  { value: "KY", label: "Kentucky" },
+  { value: "LA", label: "Louisiana" },
+  { value: "ME", label: "Maine" },
+  { value: "MD", label: "Maryland" },
+  { value: "MA", label: "Massachusetts" },
+  { value: "MI", label: "Michigan" },
+  { value: "MN", label: "Minnesota" },
+  { value: "MS", label: "Mississippi" },
+  { value: "MO", label: "Missouri" },
+  { value: "MT", label: "Montana" },
+  { value: "NE", label: "Nebraska" },
+  { value: "NV", label: "Nevada" },
+  { value: "NH", label: "New Hampshire" },
+  { value: "NJ", label: "New Jersey" },
+  { value: "NM", label: "New Mexico" },
+  { value: "NY", label: "New York" },
+  { value: "NC", label: "North Carolina" },
+  { value: "ND", label: "North Dakota" },
+  { value: "OH", label: "Ohio" },
+  { value: "OK", label: "Oklahoma" },
+  { value: "OR", label: "Oregon" },
+  { value: "PA", label: "Pennsylvania" },
+  { value: "RI", label: "Rhode Island" },
+  { value: "SC", label: "South Carolina" },
+  { value: "SD", label: "South Dakota" },
+  { value: "TN", label: "Tennessee" },
+  { value: "TX", label: "Texas" },
+  { value: "UT", label: "Utah" },
+  { value: "VT", label: "Vermont" },
+  { value: "VA", label: "Virginia" },
+  { value: "WA", label: "Washington" },
+  { value: "WV", label: "West Virginia" },
+  { value: "WI", label: "Wisconsin" },
+  { value: "WY", label: "Wyoming" },
+];
+
+const PROPERTY_CONDITIONS = [
+  { value: "excellent", label: "Excellent - Move-in ready" },
+  { value: "good", label: "Good - Minor repairs needed" },
+  { value: "fair", label: "Fair - Some repairs needed" },
+  { value: "poor", label: "Poor - Major repairs needed" },
+  { value: "needs-demolition", label: "Needs significant work/demolition" },
+];
+
+const SELLING_REASONS = [
+  { value: "foreclosure", label: "Facing foreclosure" },
+  { value: "landlord", label: "Tired of being a landlord" },
+  { value: "inherited", label: "Inherited/probate property" },
+  { value: "taxes", label: "Back taxes or liens" },
+  { value: "relocating", label: "Moving/relocating" },
+  { value: "repairs", label: "Too many repairs needed" },
+  { value: "quick-sale", label: "Want a quick sale" },
+  { value: "other", label: "Other" },
+];
+
+const MOVE_TIMELINES = [
+  { value: "immediately", label: "Immediately (within 2 weeks)" },
+  { value: "1-month", label: "1 month" },
+  { value: "2-3-months", label: "2-3 months" },
+  { value: "3-6-months", label: "3-6 months" },
+  { value: "flexible", label: "Flexible/Not sure" },
+];
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_COUNT = 10;
+
+// Refs and reactive state
 const isOfferDialogOpen = ref(false);
 
-// Form data
 const formData = ref({
   name: "",
   phone: "",
@@ -21,7 +104,7 @@ const formData = ref({
   pictures: null as FileList | null,
 });
 
-// Form validation schema (for reference)
+// Form validation schema
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   phone: z.string().min(10, "Please enter a valid phone number"),
@@ -30,7 +113,9 @@ const formSchema = z.object({
   city: z.string().min(2, "Please enter your city"),
   state: z.string().min(2, "Please select your state"),
   zip: z.string().regex(/^\d{5}(-\d{4})?$/, "Please enter a valid ZIP code"),
-  propertyCondition: z.string().min(1, "Please select the condition of your property"),
+  propertyCondition: z
+    .string()
+    .min(1, "Please select the condition of your property"),
   reasonForSelling: z.string().min(1, "Please select your reason for selling"),
   moveTimeline: z.string().min(1, "Please select your preferred timeline"),
   desiredOffer: z.string().min(1, "Please enter your desired offer amount"),
@@ -38,59 +123,65 @@ const formSchema = z.object({
   pictures: z.any().optional(),
 });
 
-// Form submission handler
-const onSubmitOffer = () => {
-  try {
-    const validated = formSchema.parse(formData.value);
-    console.log("Form submitted:", validated);
-    isOfferDialogOpen.value = false;
-    // Reset form
-    formData.value = {
-      name: "",
-      phone: "",
-      email: "",
-      address: "",
-      city: "",
-      state: "",
-      zip: "",
-      propertyCondition: "",
-      reasonForSelling: "",
-      moveTimeline: "",
-      desiredOffer: "",
-      inquiry: "",
-      pictures: null,
-    };
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      alert(`Please fix the following errors:\n${error.errors.map(e => `- ${e.message}`).join('\n')}`);
-    }
-  }
-};
+// Functions
+function resetForm() {
+  formData.value = {
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+    propertyCondition: "",
+    reasonForSelling: "",
+    moveTimeline: "",
+    desiredOffer: "",
+    inquiry: "",
+    pictures: null,
+  };
+}
 
-// File validation helper
-const handleFileChange = (e: Event) => {
+function handleFileChange(e: Event) {
   const target = e.target as HTMLInputElement;
   const files = target.files;
 
-  if (files && files.length > 10) {
-    alert('Maximum 10 images allowed');
-    target.value = '';
+  if (!files) return;
+
+  if (files.length > MAX_FILE_COUNT) {
+    alert(`Maximum ${MAX_FILE_COUNT} images allowed`);
+    target.value = "";
     return;
   }
 
-  if (files) {
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (file && file.size > 5 * 1024 * 1024) {
-        alert('Each image must be less than 5MB');
-        target.value = '';
-        return;
-      }
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    if (file && file.size > MAX_FILE_SIZE) {
+      alert("Each image must be less than 5MB");
+      target.value = "";
+      return;
     }
   }
 
   formData.value.pictures = files;
-};
+}
+
+function onSubmitOffer() {
+  try {
+    const validated = formSchema.parse(formData.value);
+    console.log("Form submitted:", validated);
+    isOfferDialogOpen.value = false;
+    resetForm();
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      alert(
+        `Please fix the following errors:\n${error.errors
+          .map((e) => `- ${e.message}`)
+          .join("\n")}`
+      );
+    }
+  }
+}
 
 const features = [
   {
@@ -151,18 +242,13 @@ const testimonials = [
     <section class="relative gradient-hero min-h-screen overflow-hidden">
       <!-- Navigation -->
       <nav
-        class="absolute top-0 left-0 right-0 z-10 px-20 py-6 flex justify-between items-center"
+        class="absolute top-0 left-0 right-0 z-10 px-20 py-6 sm:flex space-y-8 justify-between items-center"
       >
         <div class="flex items-center gap-4">
           <NuxtImg src="/logo.svg" />
           <NuxtImg src="/name.svg" />
         </div>
         <div class="flex items-center gap-6">
-          <a
-            href="#"
-            class="text-white text-sm font-semibold uppercase hover:opacity-80"
-            >Home</a
-          >
           <a
             href="#"
             class="text-white text-sm font-semibold uppercase hover:opacity-80"
@@ -181,10 +267,10 @@ const testimonials = [
 
       <!-- Hero Content -->
       <div
-        class="container mx-auto px-20 py-20 min-h-screen flex justify-between items-center"
+        class="container mx-auto px-8 sm:px-20 py-8 sm:py-20 min-h-screen sm:flex justify-between items-center"
       >
         <!-- Left Content -->
-        <div class="max-w-2xl pt-56 flex flex-col gap-16">
+        <div class="max-w-2xl pt-48 sm:pt-56 flex flex-col gap-16">
           <div class="flex flex-col gap-8">
             <div class="flex flex-col gap-4">
               <h1 class="text-white text-6xl leading-tight">
@@ -192,17 +278,17 @@ const testimonials = [
               </h1>
 
               <!-- Features -->
-              <div class="flex items-center justify-between gap-4">
+              <div class="sm:flex items-center justify-between gap-4">
                 <div class="flex items-center gap-2">
                   <NuxtImg src="check.png" />
                   <span class="text-white text-3xl font-bold">No Fees</span>
                 </div>
-                <div class="w-px h-9 bg-white/80" />
+
                 <div class="flex items-center gap-2">
                   <NuxtImg src="check.png" />
                   <span class="text-white text-3xl font-bold">No Repairs</span>
                 </div>
-                <div class="w-px h-9 bg-white/80" />
+
                 <div class="flex items-center gap-2">
                   <NuxtImg src="check.png" />
                   <span class="text-white text-3xl font-bold">No Hassle</span>
@@ -230,7 +316,7 @@ const testimonials = [
         </div>
 
         <!-- Right Image -->
-        <div class="relative w-[560px] h-[749px]">
+        <div class="hidden sm:block relative w-[560px] h-[749px]">
           <div
             class="absolute -left-1 top-36 w-[514px] h-[650px] bg-orange-100 rounded-2xl -rotate-1"
           />
@@ -248,7 +334,7 @@ const testimonials = [
       <div class="container mx-auto flex flex-col items-center gap-9">
         <h2 class="text-stone-900 text-5xl">Our Process</h2>
 
-        <div class="grid grid-cols-3 gap-6 max-w-6xl">
+        <div class="md:grid grid-cols-3 gap-6 max-w-6xl space-y-8">
           <!-- Step 1 -->
           <div class="card-base flex flex-col items-center gap-3.5">
             <div class="flex flex-col items-center gap-1.5">
@@ -357,8 +443,8 @@ const testimonials = [
     </section>
 
     <!-- Why Choose Section -->
-    <section class="px-28 py-16 bg-white">
-      <div class="container mx-auto flex gap-12 items-center">
+    <section class="px-8 sm:px-28 py-16 bg-white">
+      <div class="container mx-auto md:flex gap-12 items-center space-y-8">
         <!-- Left Content -->
         <div class="flex-1 flex flex-col gap-6">
           <h2 class="text-stone-900 text-5xl max-w-xl">
@@ -378,13 +464,13 @@ const testimonials = [
 
         <!-- Right Features -->
         <div
-          class="flex-1 pl-20 pr-11 py-14 relative flex items-center align-middle justify-center"
+          class="flex-1 sm:pl-20 sm:pr-11 sm:py-14 relative flex items-center align-middle justify-center"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 568 461"
             fill="none"
-            class="absolute h-full z-0"
+            class="hidden md:block absolute h-full z-0"
           >
             <path
               fill-rule="evenodd"
@@ -455,8 +541,10 @@ const testimonials = [
     </section>
 
     <!-- Situations Section -->
-    <section class="px-28 py-16 bg-white">
-      <div class="container mx-auto flex gap-9 items-center max-w-7xl">
+    <section class="px-8 sm:px-28 py-16 bg-white">
+      <div
+        class="container mx-auto md:flex space-y-8 gap-9 items-center max-w-7xl"
+      >
         <!-- Left Situations List -->
         <div class="flex-1 flex flex-col gap-6">
           <div
@@ -486,11 +574,11 @@ const testimonials = [
         </div>
 
         <!-- Right Content -->
-        <div class="flex-1 flex flex-col items-end gap-4">
-          <h2 class="text-stone-900 text-5xl text-right max-w-lg">
+        <div class="flex-1 flex flex-col items-end gap-4 sm:text-right">
+          <h2 class="text-stone-900 text-5xl max-w-lg">
             We help homeowners in all situations.
           </h2>
-          <p class="text-stone-900 text-base text-right max-w-md">
+          <p class="text-stone-900 text-base max-w-md">
             Fill out our quick form or call us. We'll review your property
             details — no obligations, no pushy sales talk.
           </p>
@@ -505,7 +593,7 @@ const testimonials = [
     </section>
 
     <!-- Testimonials Section -->
-    <section class="px-48 py-28 bg-white">
+    <section class="px-8 sm:px-48 py-6 sm:py-28 bg-white">
       <div class="container mx-auto flex flex-col items-center gap-6">
         <h2 class="text-stone-900 text-5xl text-center">
           Real Homeowners. Real Stories.
@@ -525,7 +613,7 @@ const testimonials = [
         </div>
 
         <!-- Testimonial Cards -->
-        <div class="grid grid-cols-3 gap-6 w-full">
+        <div class="md:grid grid-cols-3 gap-6 w-full space-y-6">
           <div
             v-for="testimonial in testimonials"
             :key="testimonial.name"
@@ -561,7 +649,7 @@ const testimonials = [
 
     <!-- Contact Form Section -->
     <section class="py-16 gradient-footer">
-      <div class="container mx-auto max-w-4xl flex gap-20 items-center px-8">
+      <div class="container mx-auto max-w-4xl sm:flex gap-20 items-center px-8">
         <!-- Left Content -->
         <div class="flex-1 py-4 flex flex-col justify-between gap-8">
           <div class="flex flex-col gap-4">
@@ -611,7 +699,7 @@ const testimonials = [
 
     <!-- Footer -->
     <footer class="bg-zinc-950">
-      <div class="px-20 py-14 flex justify-between items-start">
+      <div class="px-20 py-14 sm:flex justify-between items-start space-y-8">
         <!-- Left Footer -->
         <div class="flex flex-col gap-8">
           <div class="flex items-center gap-4">
@@ -663,7 +751,7 @@ const testimonials = [
               />
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="space-y-2">
                 <Label>Phone Number *</Label>
                 <Input
@@ -700,8 +788,8 @@ const testimonials = [
               />
             </div>
 
-            <div class="grid grid-cols-3 gap-4">
-              <div class="space-y-2">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="space-y-2 sm:col-span-1">
                 <Label>City *</Label>
                 <Input
                   v-model="formData.city"
@@ -711,23 +799,25 @@ const testimonials = [
                 />
               </div>
 
-              <div class="space-y-2">
+              <div class="space-y-2 sm:col-span-1">
                 <Label>State *</Label>
                 <Select v-model="formData.state" required>
                   <SelectTrigger>
                     <SelectValue placeholder="Select state" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="CA">California</SelectItem>
-                    <SelectItem value="AZ">Arizona</SelectItem>
-                    <SelectItem value="NV">Nevada</SelectItem>
-                    <SelectItem value="OR">Oregon</SelectItem>
-                    <SelectItem value="WA">Washington</SelectItem>
+                  <SelectContent class="max-h-[300px]">
+                    <SelectItem
+                      v-for="state in US_STATES"
+                      :key="state.value"
+                      :value="state.value"
+                    >
+                      {{ state.label }}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              <div class="space-y-2">
+              <div class="space-y-2 sm:col-span-1">
                 <Label>ZIP Code *</Label>
                 <Input
                   v-model="formData.zip"
@@ -750,11 +840,13 @@ const testimonials = [
                   <SelectValue placeholder="Select condition" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="excellent">Excellent - Move-in ready</SelectItem>
-                  <SelectItem value="good">Good - Minor repairs needed</SelectItem>
-                  <SelectItem value="fair">Fair - Some repairs needed</SelectItem>
-                  <SelectItem value="poor">Poor - Major repairs needed</SelectItem>
-                  <SelectItem value="needs-demolition">Needs significant work/demolition</SelectItem>
+                  <SelectItem
+                    v-for="condition in PROPERTY_CONDITIONS"
+                    :key="condition.value"
+                    :value="condition.value"
+                  >
+                    {{ condition.label }}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -766,14 +858,13 @@ const testimonials = [
                   <SelectValue placeholder="Select reason" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="foreclosure">Facing foreclosure</SelectItem>
-                  <SelectItem value="landlord">Tired of being a landlord</SelectItem>
-                  <SelectItem value="inherited">Inherited/probate property</SelectItem>
-                  <SelectItem value="taxes">Back taxes or liens</SelectItem>
-                  <SelectItem value="relocating">Moving/relocating</SelectItem>
-                  <SelectItem value="repairs">Too many repairs needed</SelectItem>
-                  <SelectItem value="quick-sale">Want a quick sale</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
+                  <SelectItem
+                    v-for="reason in SELLING_REASONS"
+                    :key="reason.value"
+                    :value="reason.value"
+                  >
+                    {{ reason.label }}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -785,11 +876,13 @@ const testimonials = [
                   <SelectValue placeholder="Select timeline" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="immediately">Immediately (within 2 weeks)</SelectItem>
-                  <SelectItem value="1-month">1 month</SelectItem>
-                  <SelectItem value="2-3-months">2-3 months</SelectItem>
-                  <SelectItem value="3-6-months">3-6 months</SelectItem>
-                  <SelectItem value="flexible">Flexible/Not sure</SelectItem>
+                  <SelectItem
+                    v-for="timeline in MOVE_TIMELINES"
+                    :key="timeline.value"
+                    :value="timeline.value"
+                  >
+                    {{ timeline.label }}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -838,23 +931,26 @@ const testimonials = [
           <!-- Disclaimer -->
           <div class="bg-muted p-4 rounded-lg">
             <p class="text-sm text-muted-foreground">
-              <strong>Privacy Guarantee:</strong> We respect your privacy and will never
-              sell, rent, or share your personal information with third parties. Your
-              information will only be used to provide you with a fair cash offer for
-              your property.
+              <strong>Privacy Guarantee:</strong> We respect your privacy and
+              will never sell, rent, or share your personal information with
+              third parties. Your information will only be used to provide you
+              with a fair cash offer for your property.
             </p>
           </div>
 
-          <!-- Submit Button -->
-          <div class="flex justify-end gap-3">
+          <!-- Submit Buttons -->
+          <div class="flex flex-col-reverse sm:flex-row justify-end gap-3">
             <Button
               type="button"
               variant="outline"
               @click="isOfferDialogOpen = false"
+              class="w-full sm:w-auto"
             >
               Cancel
             </Button>
-            <Button type="submit">Submit Request</Button>
+            <Button type="submit" class="w-full sm:w-auto">
+              Submit Request
+            </Button>
           </div>
         </form>
       </DialogScrollContent>
