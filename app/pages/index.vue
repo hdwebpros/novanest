@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { z } from "zod";
 import { toast } from "vue-sonner";
+import { z } from "zod";
 
 // Constants
 const US_STATES = [
@@ -205,7 +205,9 @@ async function onSubmitContact() {
     });
 
     if (response.ok) {
-      toast.success("Thank you for contacting us! We will get back to you soon.");
+      toast.success(
+        "Thank you for contacting us! We will get back to you soon."
+      );
       // Reset contact form
       contactFormData.value = {
         name: "",
@@ -217,7 +219,9 @@ async function onSubmitContact() {
       throw new Error("Failed to submit form");
     }
   } catch (error) {
-    toast.error("An error occurred while submitting your request. Please try again.");
+    toast.error(
+      "An error occurred while submitting your request. Please try again."
+    );
     console.error("Submission error:", error);
   }
 }
@@ -289,12 +293,12 @@ const testimonials = [
         </div>
         <div class="flex items-center gap-6">
           <a
-            href="#"
+            href="#about"
             class="text-white text-sm font-semibold uppercase hover:opacity-80"
             >About</a
           >
           <a
-            href="#"
+            href="#contact-form"
             class="text-white text-sm font-semibold uppercase hover:opacity-80"
             >Contact</a
           >
@@ -482,7 +486,7 @@ const testimonials = [
     </section>
 
     <!-- Why Choose Section -->
-    <section class="px-8 sm:px-28 py-16 bg-white">
+    <section id="about" class="px-8 sm:px-28 py-16 bg-white">
       <div class="container mx-auto md:flex gap-12 items-center space-y-8">
         <!-- Left Content -->
         <div class="flex-1 flex flex-col gap-6">
@@ -687,7 +691,7 @@ const testimonials = [
     </section>
 
     <!-- Contact Form Section -->
-    <section class="py-16 gradient-footer">
+    <section id="contact-form" class="py-16 gradient-footer">
       <div class="container mx-auto max-w-4xl sm:flex gap-20 items-center px-8">
         <!-- Left Content -->
         <div class="flex-1 py-4 flex flex-col justify-between gap-8">
