@@ -349,7 +349,9 @@ const testimonials = [
               <button class="btn-primary" @click="isOfferDialogOpen = true">
                 Get my offer
               </button>
-              <button class="btn-secondary">See how it works</button>
+              <NuxtLink class="btn-secondary" to="#about"
+                >See how it works</NuxtLink
+              >
             </div>
           </div>
 
