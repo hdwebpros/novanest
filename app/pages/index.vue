@@ -618,6 +618,7 @@ const testimonials = [
 
         <!-- Right Content -->
         <div class="flex-1 flex flex-col items-end gap-4 sm:text-right">
+          <NuxtImg src="emily.jpg" width="200" />
           <h2 class="text-stone-900 text-5xl max-w-lg">
             We help homeowners in all situations.
           </h2>
@@ -772,8 +773,10 @@ const testimonials = [
       <!-- Copyright -->
       <div class="px-2.5 py-4 border-t border-white/10 text-center">
         <p class="text-white/50 text-base">
-          Copyright 2025. | Website by Happy Dog Web Productions | Terms of
-          Service | Privacy Policy
+          Copyright {{ new Date().getFullYear() }}. | by
+          <NuxtLink to="https://happydog.digital">
+            Happy Dog Web Productions</NuxtLink
+          >
         </p>
       </div>
     </footer>
