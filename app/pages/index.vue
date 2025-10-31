@@ -104,6 +104,13 @@ const formData = ref({
   pictures: null as FileList | null,
 });
 
+const contactFormData = ref({
+  name: "",
+  contact: "",
+  address: "",
+  message: "",
+});
+
 // Form validation schema
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -166,10 +173,53 @@ function handleFileChange(e: Event) {
   formData.value.pictures = files;
 }
 
-function onSubmitOffer() {
+async function onSubmitOffer() {
   try {
     const validated = formSchema.parse(formData.value);
-    console.log("Form submitted:", validated);
+
+    // Prepare data object (excluding pictures for now as they need separate handling)
+    const dataToSubmit: Record<string, any> = {
+      formType: "offer",
+    };
+
+    Object.entries(validated).forEach(([key, value]) => {
+      if (key !== "pictures" && value !== null && value !== undefined) {
+        dataToSubmit[key] = value;
+      }
+    });
+
+    // If there are pictures, convert to base64
+    if (validated.pictures && validated.pictures instanceof FileList) {
+      const picturePromises = Array.from(validated.pictures).map((file) => {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            resolve({
+              name: file.name,
+              type: file.type,
+              data: reader.result,
+            });
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+      dataToSubmit.pictures = await Promise.all(picturePromises);
+    }
+
+    // Submit to endpoint as JSON
+    const response = await fetch("api/novanest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToSubmit),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to submit form");
+    }
+
+    alert("Thank you! We will be in touch with your offer soon.");
     isOfferDialogOpen.value = false;
     resetForm();
   } catch (error) {
@@ -179,7 +229,44 @@ function onSubmitOffer() {
           .map((e) => `- ${e.message}`)
           .join("\n")}`
       );
+    } else {
+      alert(
+        "An error occurred while submitting your request. Please try again."
+      );
+      console.error("Submission error:", error);
     }
+  }
+}
+
+async function onSubmitContact() {
+  try {
+    // Submit contact form
+    const response = await fetch("/api/novanest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...contactFormData.value,
+        formType: "contact",
+      }),
+    });
+
+    if (response.ok) {
+      alert("Thank you for contacting us! We will get back to you soon.");
+      // Reset contact form
+      contactFormData.value = {
+        name: "",
+        contact: "",
+        address: "",
+        message: "",
+      };
+    } else {
+      throw new Error("Failed to submit form");
+    }
+  } catch (error) {
+    alert("An error occurred while submitting your request. Please try again.");
+    console.error("Submission error:", error);
   }
 }
 
@@ -666,23 +753,33 @@ const testimonials = [
         </div>
 
         <!-- Right Form -->
-        <form class="flex-1 flex flex-col gap-3">
+        <form
+          @submit.prevent="onSubmitContact"
+          class="flex-1 flex flex-col gap-3"
+        >
           <input
+            v-model="contactFormData.name"
             type="text"
             placeholder="NAME"
+            required
             class="px-4 py-2 bg-pink-600/25 text-white placeholder:text-white/50 rounded-full text-xs uppercase"
           />
           <input
+            v-model="contactFormData.contact"
             type="text"
             placeholder="PHONE/EMAIL"
+            required
             class="px-4 py-2 bg-pink-600/25 text-white placeholder:text-white/50 rounded-full text-xs uppercase"
           />
           <input
+            v-model="contactFormData.address"
             type="text"
             placeholder="PROPERTY ADDRESS"
+            required
             class="px-4 py-2 bg-pink-600/25 text-white placeholder:text-white/50 rounded-full text-xs uppercase"
           />
           <textarea
+            v-model="contactFormData.message"
             placeholder="TELL US ABOUT YOUR HOME"
             rows="4"
             class="px-4 py-3 bg-pink-600/25 text-white placeholder:text-white/50 rounded-3xl text-xs uppercase resize-none"
