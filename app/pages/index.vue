@@ -258,24 +258,31 @@ const situations = [
 const testimonials = [
   {
     quote:
-      '"They helped me sell my home in just 10 days, even though it needed a lot of work. Honest and easy to deal with!"',
-    name: "John A.",
-    location: "Simi Valley, CA",
-    image: "1.png",
+      '"THey helped with seller financing and it was a tenant lease buyout. Honest and easy to deal with!"',
+    name: "Ben O.",
+    location: "Duplex - Minneapolis, MN",
+    image: "ben.png",
   },
   {
     quote:
-      '"I was behind on my payments and didn\'t know what to do. NOVANEST walked me through everything."',
-    name: "Chris P.",
-    location: "Simi Valley, CA",
-    image: "2.png",
+      '"I was a tired landlord and didn\'t know what to do. NOVANEST walked me through everything."',
+    name: "Jim K.",
+    location: "Duplex - Saint Paul, MN",
+    image: "jim.png",
   },
   {
     quote:
-      '"Great experience. Got a fair offer and closed fast without paying a single commission."',
-    name: "Katherine M.",
-    location: "Simi Valley, CA",
-    image: "3.png",
+      '"Being a landlord is tough. I got a fair offer and closed fast without paying a single commission."',
+    name: "Mike D.",
+    location: "Single family - Saint Paul",
+    image: "mike.png",
+  },
+  {
+    quote:
+      '"Great experience. I did not want to take care of my property and I relocated. NovaNest made this so easy."',
+    name: "Steve B.",
+    location: "Single family - White Bear Lake",
+    image: "steve.png",
   },
 ];
 </script>
@@ -655,11 +662,11 @@ const testimonials = [
             />
           </div>
           <span class="text-stone-900 text-4xl font-bold">4.9</span>
-          <span class="text-stone-900 text-base">from 100+ reviews</span>
+          <span class="text-stone-900 text-base">from many reviews</span>
         </div>
 
         <!-- Testimonial Cards -->
-        <div class="md:grid grid-cols-3 gap-6 w-full space-y-6">
+        <div class="md:grid grid-cols-4 gap-6 w-full space-y-6">
           <div
             v-for="testimonial in testimonials"
             :key="testimonial.name"
@@ -678,7 +685,7 @@ const testimonials = [
             <div
               class="border-t border-zinc-900/40 pt-3 flex items-center gap-5"
             >
-              <NuxtImg :src="`testimonials/${testimonial.image}`" />
+              <NuxtImg :src="`testimonials/${testimonial.image}`" width="40" />
               <div>
                 <p class="text-stone-900 text-lg font-bold">
                   {{ testimonial.name }}
