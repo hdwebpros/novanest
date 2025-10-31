@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { z } from "zod";
+import { toast } from "vue-sonner";
 
 // Constants
 const US_STATES = [
@@ -82,9 +83,6 @@ const MOVE_TIMELINES = [
   { value: "flexible", label: "Flexible/Not sure" },
 ];
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-const MAX_FILE_COUNT = 10;
-
 // Refs and reactive state
 const isOfferDialogOpen = ref(false);
 
@@ -101,7 +99,6 @@ const formData = ref({
   moveTimeline: "",
   desiredOffer: "",
   inquiry: "",
-  pictures: null as FileList | null,
 });
 
 const contactFormData = ref({
@@ -127,7 +124,6 @@ const formSchema = z.object({
   moveTimeline: z.string().min(1, "Please select your preferred timeline"),
   desiredOffer: z.string().min(1, "Please enter your desired offer amount"),
   inquiry: z.string().optional(),
-  pictures: z.any().optional(),
 });
 
 // Functions
@@ -145,66 +141,22 @@ function resetForm() {
     moveTimeline: "",
     desiredOffer: "",
     inquiry: "",
-    pictures: null,
   };
-}
-
-function handleFileChange(e: Event) {
-  const target = e.target as HTMLInputElement;
-  const files = target.files;
-
-  if (!files) return;
-
-  if (files.length > MAX_FILE_COUNT) {
-    alert(`Maximum ${MAX_FILE_COUNT} images allowed`);
-    target.value = "";
-    return;
-  }
-
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    if (file && file.size > MAX_FILE_SIZE) {
-      alert("Each image must be less than 5MB");
-      target.value = "";
-      return;
-    }
-  }
-
-  formData.value.pictures = files;
 }
 
 async function onSubmitOffer() {
   try {
     const validated = formSchema.parse(formData.value);
 
-    // Prepare data object (excluding pictures for now as they need separate handling)
     const dataToSubmit: Record<string, any> = {
       formType: "offer",
     };
 
     Object.entries(validated).forEach(([key, value]) => {
-      if (key !== "pictures" && value !== null && value !== undefined) {
+      if (value !== null && value !== undefined) {
         dataToSubmit[key] = value;
       }
     });
-
-    // If there are pictures, convert to base64
-    if (validated.pictures && validated.pictures instanceof FileList) {
-      const picturePromises = Array.from(validated.pictures).map((file) => {
-        return new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            resolve({
-              name: file.name,
-              type: file.type,
-              data: reader.result,
-            });
-          };
-          reader.readAsDataURL(file);
-        });
-      });
-      dataToSubmit.pictures = await Promise.all(picturePromises);
-    }
 
     // Submit to endpoint as JSON
     const response = await fetch("api/novanest", {
@@ -219,18 +171,18 @@ async function onSubmitOffer() {
       throw new Error("Failed to submit form");
     }
 
-    alert("Thank you! We will be in touch with your offer soon.");
+    toast.success("Thank you! We will be in touch with your offer soon.");
     isOfferDialogOpen.value = false;
     resetForm();
   } catch (error) {
     if (error instanceof z.ZodError) {
-      alert(
-        `Please fix the following errors:\n${error.errors
-          .map((e) => `- ${e.message}`)
-          .join("\n")}`
+      toast.error(
+        `Please fix the following errors: ${error.errors
+          .map((e) => e.message)
+          .join(", ")}`
       );
     } else {
-      alert(
+      toast.error(
         "An error occurred while submitting your request. Please try again."
       );
       console.error("Submission error:", error);
@@ -253,7 +205,7 @@ async function onSubmitContact() {
     });
 
     if (response.ok) {
-      alert("Thank you for contacting us! We will get back to you soon.");
+      toast.success("Thank you for contacting us! We will get back to you soon.");
       // Reset contact form
       contactFormData.value = {
         name: "",
@@ -265,7 +217,7 @@ async function onSubmitContact() {
       throw new Error("Failed to submit form");
     }
   } catch (error) {
-    alert("An error occurred while submitting your request. Please try again.");
+    toast.error("An error occurred while submitting your request. Please try again.");
     console.error("Submission error:", error);
   }
 }
@@ -1010,19 +962,6 @@ const testimonials = [
                 class="min-h-[100px]"
               />
             </div>
-
-            <div class="space-y-2">
-              <Label>Upload Property Pictures (Optional)</Label>
-              <Input
-                type="file"
-                accept="image/*"
-                multiple
-                @change="handleFileChange"
-              />
-              <p class="text-sm text-muted-foreground">
-                Max 10 images, 5MB each. Supported formats: JPG, PNG, HEIC
-              </p>
-            </div>
           </div>
 
           <!-- Disclaimer -->
@@ -1052,5 +991,6 @@ const testimonials = [
         </form>
       </DialogScrollContent>
     </Dialog>
+    <Toaster />
   </div>
 </template>
