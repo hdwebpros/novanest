@@ -2,6 +2,11 @@
 import { toast } from "vue-sonner";
 import { z } from "zod";
 
+// SEO Meta
+useSeoMeta({
+  ogImage: "/ogimage.png",
+});
+
 // Constants
 const US_STATES = [
   { value: "AL", label: "Alabama" },
