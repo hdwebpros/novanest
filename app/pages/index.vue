@@ -632,7 +632,11 @@ const testimonials = [
 
         <!-- Right Content -->
         <div class="flex-1 flex flex-col items-end gap-4 sm:text-right">
-          <NuxtImg src="emily.jpg" width="200" />
+          <div class="grid grid-cols-2 gap-8">
+            <NuxtImg src="emily.jpg" height="250" />
+            <NuxtImg src="kate.png" height="200" class="mt-12" />
+          </div>
+
           <h2 class="text-stone-900 text-5xl max-w-lg">
             We help homeowners in all situations.
           </h2>
