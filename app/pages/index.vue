@@ -633,8 +633,22 @@ const testimonials = [
         <!-- Right Content -->
         <div class="flex-1 flex flex-col items-end gap-4 sm:text-right">
           <div class="grid grid-cols-2 gap-8">
-            <NuxtImg src="emily.jpg" height="250" />
-            <NuxtImg src="kate.png" height="200" class="mt-12" />
+            <Card>
+              <CardContent>
+                <NuxtImg src="emily.jpg" class="object-cover w-full" />
+              </CardContent>
+              <CardFooter class="flex items-center justify-center font-bold">
+                Emily
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardContent>
+                <NuxtImg src="kate.png" class="object-cover w-full" />
+              </CardContent>
+              <CardFooter class="flex items-center justify-center font-bold">
+                Kate
+              </CardFooter>
+            </Card>
           </div>
 
           <h2 class="text-stone-900 text-5xl max-w-lg">
