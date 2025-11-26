@@ -638,7 +638,7 @@ const testimonials = [
                 <NuxtImg src="emily.jpg" class="object-cover w-full" />
               </CardContent>
               <CardFooter class="flex items-center justify-center font-bold">
-                Emily
+                Emily Boog
               </CardFooter>
             </Card>
             <Card>
@@ -646,7 +646,7 @@ const testimonials = [
                 <NuxtImg src="kate.png" class="object-cover w-full" />
               </CardContent>
               <CardFooter class="flex items-center justify-center font-bold">
-                Kate
+                Kate Merrigan
               </CardFooter>
             </Card>
           </div>
