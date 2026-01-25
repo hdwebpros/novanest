@@ -301,10 +301,15 @@ const testimonials = [
         class="absolute top-0 left-0 right-0 z-10 px-20 py-6 sm:flex space-y-8 justify-between items-center"
       >
         <div class="flex items-center gap-4">
-          <NuxtImg src="/logo.svg" />
+          <NuxtImg src="/logo.svg" class="scale-[1.2]" />
           <NuxtImg src="/name.svg" />
         </div>
         <div class="flex items-center gap-6">
+          <a
+            href="tel:6124402899"
+            class="text-white text-sm font-semibold hover:opacity-80"
+            >(612) 440-2899</a
+          >
           <a
             href="#about"
             class="text-white text-sm font-semibold uppercase hover:opacity-80"
