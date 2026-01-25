@@ -384,9 +384,9 @@ const testimonials = [
           <div
             class="absolute -left-1 top-36 w-[514px] h-[650px] bg-orange-100 rounded-2xl -rotate-1"
           />
-          <img
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=800&fit=crop"
-            alt="Modern home"
+          <NuxtImg
+            src="heroimg.png"
+            alt="Nova Nest"
             class="absolute left-12 top-24 w-[514px] h-[650px] rounded-2xl object-cover"
           />
         </div>
