@@ -70,13 +70,13 @@ const PROPERTY_CONDITIONS = [
 ];
 
 const SELLING_REASONS = [
-  { value: "foreclosure", label: "Facing foreclosure" },
   { value: "landlord", label: "Tired of being a landlord" },
   { value: "inherited", label: "Inherited/probate property" },
   { value: "taxes", label: "Back taxes or liens" },
   { value: "relocating", label: "Moving/relocating" },
   { value: "repairs", label: "Too many repairs needed" },
   { value: "quick-sale", label: "Want a quick sale" },
+  { value: "behind-mortgage", label: "Behind on mortgage" },
   { value: "other", label: "Other" },
 ];
 
@@ -184,11 +184,11 @@ async function onSubmitOffer() {
       toast.error(
         `Please fix the following errors: ${error.errors
           .map((e) => e.message)
-          .join(", ")}`
+          .join(", ")}`,
       );
     } else {
       toast.error(
-        "An error occurred while submitting your request. Please try again."
+        "An error occurred while submitting your request. Please try again.",
       );
       console.error("Submission error:", error);
     }
@@ -211,7 +211,7 @@ async function onSubmitContact() {
 
     if (response.ok) {
       toast.success(
-        "Thank you for contacting us! We will get back to you soon."
+        "Thank you for contacting us! We will get back to you soon.",
       );
       // Reset contact form
       contactFormData.value = {
@@ -225,7 +225,7 @@ async function onSubmitContact() {
     }
   } catch (error) {
     toast.error(
-      "An error occurred while submitting your request. Please try again."
+      "An error occurred while submitting your request. Please try again.",
     );
     console.error("Submission error:", error);
   }
@@ -242,7 +242,8 @@ const features = [
   },
   {
     title: "Experienced Team",
-    description: "We work directly with local agents and investors.",
+    description:
+      "We work directly with reputable investors and title companies.",
   },
   {
     title: "No Hidden Fees",
@@ -251,12 +252,12 @@ const features = [
 ];
 
 const situations = [
-  "Facing foreclosure or behind on payments",
+  "House needs too many repairs",
   "Tired of being a landlord",
   "Dealing with inherited or probate property",
-  "Owe back taxes or liens",
   "Moving, downsizing, or relocating",
-  "House needs too many repairs",
+  "Behind on payments or facing uncertainty",
+  "Owe back taxes or liens",
   "Simply want a quick, no-hassle sale",
 ];
 
@@ -352,8 +353,9 @@ const testimonials = [
             </div>
 
             <p class="text-white/80 text-base max-w-xl">
-              We help homeowners get quick, fair, and stress-free offers — even
-              if your property needs work or is facing foreclosure.
+              We help homeowners and landlords get quick, fair, and stress-free
+              offers — even if your property needs work or you're facing
+              uncertainty. We work on quick timelines that fit your schedule.
             </p>
 
             <!-- CTA Buttons -->
@@ -368,7 +370,7 @@ const testimonials = [
           </div>
 
           <p class="text-orange-100/80 text-base">
-            Trusted by local homeowners and investors across Minnesota.
+            Trusted by local homeowners and investors across MN, WI, and MI.
           </p>
         </div>
 
@@ -513,8 +515,9 @@ const testimonials = [
               how to help you move forward fast.
             </p>
             <p class="max-w-md">
-              We specialize in helping homeowners facing preforeclosure,
-              probate, liens, or life changes.
+              Whether you're downsizing, dealing with health issues, behind on
+              your mortgage, managing an inherited home, or facing back taxes
+              and liens — we're here to help.
             </p>
           </div>
         </div>
@@ -637,16 +640,45 @@ const testimonials = [
               <CardContent>
                 <NuxtImg src="emily.jpg" class="object-cover w-full" />
               </CardContent>
-              <CardFooter class="flex items-center justify-center font-bold">
-                Emily Boog
+              <CardFooter class="flex flex-col items-center">
+                <span class="font-bold">Emily Boog</span>
+                <Accordion type="single" collapsible class="w-full">
+                  <AccordionItem value="emily" class="border-none">
+                    <AccordionTrigger
+                      class="text-sm text-pink-600 hover:no-underline py-1 justify-center"
+                    >
+                      More about Emily
+                    </AccordionTrigger>
+                    <AccordionContent class="text-left text-sm text-stone-600">
+                      Emily is married with two teenage boys and two beloved
+                      dogs. On weekends, you'll find her birdwatching with her
+                      pups at the lake, enjoying the peaceful outdoors.
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </CardFooter>
             </Card>
             <Card>
               <CardContent>
                 <NuxtImg src="kate.png" class="object-cover w-full" />
               </CardContent>
-              <CardFooter class="flex items-center justify-center font-bold">
-                Kate Merrigan
+              <CardFooter class="flex flex-col items-center">
+                <span class="font-bold">Kate Merrigan</span>
+                <Accordion type="single" collapsible class="w-full">
+                  <AccordionItem value="kate" class="border-none">
+                    <AccordionTrigger
+                      class="text-sm text-pink-600 hover:no-underline py-1 justify-center"
+                    >
+                      More about Kate
+                    </AccordionTrigger>
+                    <AccordionContent class="text-left text-sm text-stone-600">
+                      Kate is close with her younger family and, like Emily, is
+                      a proud dog parent. When she isn't helping people navigate
+                      their home situations, her young family keeps her happily
+                      busy.
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </CardFooter>
             </Card>
           </div>
