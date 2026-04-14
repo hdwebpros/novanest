@@ -47,6 +47,12 @@ function parsePropertyDoc(html: string): {
   return { fields, description };
 }
 
+function parseNum(raw: string | undefined): number {
+  if (!raw) return 0;
+  const cleaned = raw.replace(/[$,\s]/g, "");
+  return Number(cleaned) || 0;
+}
+
 function buildProperty(
   folderId: string,
   folderName: string,
@@ -59,12 +65,12 @@ function buildProperty(
     city: fields.city || "",
     state: fields.state || "",
     zip: fields.zip || "",
-    price: Number(fields.price) || 0,
-    value: Number(fields.value || fields.market_value) || 0,
-    beds: Number(fields.beds || fields.bedrooms) || 0,
-    baths: Number(fields.baths || fields.bathrooms) || 0,
-    sqft: Number(fields.sqft || fields.square_feet) || 0,
-    acreage: Number(fields.acreage || fields.acres) || 0,
+    price: parseNum(fields.price),
+    value: parseNum(fields.value || fields.market_value),
+    beds: parseNum(fields.beds || fields.bedrooms),
+    baths: parseNum(fields.baths || fields.bathrooms),
+    sqft: parseNum(fields.sqft || fields.square_feet),
+    acreage: parseNum(fields.acreage || fields.acres),
     propertyType: fields.property_type || fields.type || "",
     terms: fields.terms || "",
     closeDate: fields.close_date || "",
