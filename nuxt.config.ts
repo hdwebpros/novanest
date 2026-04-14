@@ -15,15 +15,19 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  components: [
+    {
+      path: "~/components",
+      extensions: [".vue"],
+    },
+  ],
   shadcn: {
-    /**
-     * Prefix for all the imported component
-     */
     prefix: "",
-    /**
-     * Directory that the component lives in.
-     * @default "./components/ui"
-     */
     componentDir: "./app/components/ui",
+  },
+  runtimeConfig: {
+    googleServiceAccountEmail: "",
+    googleServiceAccountPrivateKey: "",
+    googlePropertiesFolderId: "",
   },
 });

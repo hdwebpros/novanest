@@ -1,0 +1,1 @@
+- [feedback_simplicity.md](./feedback_simplicity.md) — User wants dead-simple architecture, no unnecessary abstraction. Wife uses the system.

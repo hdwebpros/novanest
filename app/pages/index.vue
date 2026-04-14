@@ -310,6 +310,11 @@ const testimonials = [
             class="text-white text-sm font-semibold hover:opacity-80"
             >(612) 440-2899</a
           >
+          <NuxtLink
+            to="/properties"
+            class="text-white text-sm font-semibold uppercase hover:opacity-80"
+            >Properties</NuxtLink
+          >
           <a
             href="#about"
             class="text-white text-sm font-semibold uppercase hover:opacity-80"
