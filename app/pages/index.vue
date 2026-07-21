@@ -645,7 +645,7 @@ const testimonials = [
 
         <!-- Right Content -->
         <div class="flex-1 flex flex-col items-end gap-4 sm:text-right">
-          <div class="grid grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 gap-8 max-w-xs">
             <Card>
               <CardContent>
                 <NuxtImg src="emily.jpg" class="object-cover w-full" />
@@ -663,29 +663,6 @@ const testimonials = [
                       Emily is married with two teenage boys and two beloved
                       dogs. On weekends, you'll find her birdwatching with her
                       pups at the lake, enjoying the peaceful outdoors.
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </CardFooter>
-            </Card>
-            <Card>
-              <CardContent>
-                <NuxtImg src="kate.png" class="object-cover w-full" />
-              </CardContent>
-              <CardFooter class="flex flex-col items-center">
-                <span class="font-bold">Kate Merrigan</span>
-                <Accordion type="single" collapsible class="w-full">
-                  <AccordionItem value="kate" class="border-none">
-                    <AccordionTrigger
-                      class="text-sm text-pink-600 hover:no-underline py-1 justify-center"
-                    >
-                      More about Kate
-                    </AccordionTrigger>
-                    <AccordionContent class="text-left text-sm text-stone-600">
-                      Kate is close with her younger family and, like Emily, is
-                      a proud dog parent. When she isn't helping people navigate
-                      their home situations, her young family keeps her happily
-                      busy.
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
