@@ -28,10 +28,18 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const width = query.w ? parseInt(query.w as string, 10) : null;
 
-  if (isImage && width && width > 0 && width <= 2000) {
-    buffer = await sharp(buffer)
-      .resize({ width, withoutEnlargement: true })
-      .toBuffer();
+  // .rotate() with no args applies EXIF orientation (iPhone photos)
+  // and strips the tag so browsers/resizes don't show them sideways.
+  if (isImage) {
+    try {
+      let pipeline = sharp(buffer).rotate();
+      if (width && width > 0 && width <= 2000) {
+        pipeline = pipeline.resize({ width, withoutEnlargement: true });
+      }
+      buffer = await pipeline.toBuffer();
+    } catch (err) {
+      console.error(`[media] sharp failed for ${fileId}:`, err);
+    }
   }
 
   setResponseHeaders(event, {
