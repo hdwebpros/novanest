@@ -42,7 +42,7 @@ watchEffect(() => {
       title: `${property.value.address}, ${property.value.city}, ${property.value.state} | NovaNest`,
       description: `${property.value.propertyType} in ${property.value.city}, ${property.value.state}. ${property.value.beds} bed, ${property.value.baths} bath, ${formatNumber(property.value.sqft)} sqft. $${formatPrice(property.value.price)}.`,
       ogImage: property.value.featuredImageFileId
-        ? `/api/properties/media/${property.value.featuredImageFileId}?w=1200`
+        ? `/api/properties/media/${property.value.featuredImageFileId}?w=1200&o=1`
         : undefined,
     });
   }

@@ -61,7 +61,7 @@ function openLightbox(index?: number) {
             @click="openLightbox(index)"
           >
             <img
-              :src="`/api/properties/media/${image.id}?w=1200`"
+              :src="`/api/properties/media/${image.id}?w=1200&o=1`"
               :alt="image.name"
               :loading="index === 0 ? 'eager' : 'lazy'"
               :fetchpriority="index === 0 ? 'high' : undefined"
@@ -104,7 +104,7 @@ function openLightbox(index?: number) {
         @click="goToSlide(index)"
       >
         <img
-          :src="`/api/properties/media/${image.id}?w=160`"
+          :src="`/api/properties/media/${image.id}?w=160&o=1`"
           :alt="image.name"
           loading="lazy"
           class="w-full h-full object-cover"
@@ -141,7 +141,7 @@ function openLightbox(index?: number) {
                 class="flex items-center justify-center h-full"
               >
                 <img
-                  :src="`/api/properties/media/${image.id}?w=1200`"
+                  :src="`/api/properties/media/${image.id}?w=1200&o=1`"
                   :alt="image.name"
                   :loading="index === 0 ? 'eager' : 'lazy'"
                   class="max-w-full max-h-[calc(90vh-8rem)] object-contain rounded-lg"
@@ -176,7 +176,7 @@ function openLightbox(index?: number) {
             @click="lightboxApi?.scrollTo(index)"
           >
             <img
-              :src="`/api/properties/media/${image.id}?w=160`"
+              :src="`/api/properties/media/${image.id}?w=160&o=1`"
               :alt="image.name"
               loading="lazy"
               class="w-full h-full object-cover"

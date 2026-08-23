@@ -8,7 +8,7 @@ const props = defineProps<{
 
 const imageUrl = computed(() => {
   if (props.property.featuredImageFileId) {
-    return `/api/properties/media/${props.property.featuredImageFileId}?w=600`;
+    return `/api/properties/media/${props.property.featuredImageFileId}?w=600&o=1`;
   }
   return "";
 });
