@@ -1,0 +1,129 @@
+{
+  "status": "active",
+  "createdAt": "2026-09-25T15:20:00.000Z",
+  "updatedAt": "2026-09-25T15:20:00.000Z",
+  "expiresAt": "2026-10-09T15:20:00.000Z",
+  "sellerFirstName": "Maria-Guadalupe",
+  "property": {
+    "address": "4417 Chicago Avenue South, Upper and Lower Units (side-by-side duplex)",
+    "city": "Minneapolis",
+    "state": "MN",
+    "postalCode": "55407",
+    "county": "Hennepin",
+    "propertyType": "duplex",
+    "units": 2,
+    "beds": 4,
+    "baths": 2,
+    "totalFinishedSqft": 2100,
+    "aboveGradeFinishedSqft": 2100,
+    "lotAcres": 0.12,
+    "yearBuilt": 1912,
+    "annualTaxes": 5900,
+    "photos": []
+  },
+  "offer": 170000,
+  "fixedUpValue": {
+    "value": 393385,
+    "avgPricePerSqft": 187.33,
+    "comps": [
+      {
+        "address": "4521 Chicago Avenue South, Minneapolis, MN 55407",
+        "url": "https://www.zillow.com/homedetails/d1",
+        "beds": 4,
+        "baths": 2,
+        "totalFinishedSqft": 2050,
+        "yearBuilt": 1915,
+        "soldPrice": 389000,
+        "soldDate": "2026-06-14",
+        "distanceMi": 0.3,
+        "photoUrl": "https://photos.zillowstatic.com/fp/does-not-exist.jpg",
+        "pricePerSqft": 189.76
+      },
+      {
+        "address": "4300 Columbus Ave S, Minneapolis, MN",
+        "url": "https://www.zillow.com/homedetails/d2",
+        "beds": 4,
+        "baths": 2,
+        "totalFinishedSqft": 2200,
+        "yearBuilt": 1910,
+        "soldPrice": 405000,
+        "soldDate": "2026-04-02",
+        "distanceMi": 0.4,
+        "photoUrl": null,
+        "pricePerSqft": 184.09
+      },
+      {
+        "address": "4610 Elliot Ave S, Minneapolis, MN",
+        "url": "https://www.zillow.com/homedetails/d3",
+        "beds": 4,
+        "baths": 2,
+        "totalFinishedSqft": 1980,
+        "yearBuilt": 1922,
+        "soldPrice": 372500,
+        "soldDate": "2025-11-20",
+        "distanceMi": 0.8,
+        "photoUrl": "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=400&q=80",
+        "pricePerSqft": 188.13
+      }
+    ]
+  },
+  "repairs": {
+    "total": 94500,
+    "perSqft": 45,
+    "sqft": 2100,
+    "summary": null,
+    "knownIssues": []
+  },
+  "landlord": {
+    "purchasePrice": 170000,
+    "downPaymentPct": 0.2,
+    "downPayment": 34000,
+    "loanAmount": 136000,
+    "interestRate": 0.0725,
+    "loanTermYears": 30,
+    "closingCosts": 4200,
+    "rehab": 94500,
+    "holdingMonths": 3,
+    "holdingCosts": 5358,
+    "cashNeeded": 138058,
+    "monthly": {
+      "units": 2,
+      "rentPerUnit": 1350,
+      "grossRent": 2700,
+      "vacancy": 135,
+      "propertyMgmt": 135,
+      "maintenanceCapex": 135,
+      "mortgage": 927.76,
+      "taxes": 491.67,
+      "insurance": 216.67,
+      "sewerTrash": 150,
+      "cashflow": 508.9
+    },
+    "cashflowPerUnit": 254.45,
+    "targetPerUnit": 500,
+    "meetsTarget": false,
+    "rentComps": []
+  },
+  "flipper": {
+    "purchasePrice": 170000,
+    "closingCosts": 4200,
+    "rehab": 94500,
+    "holdingMonths": 2,
+    "holdingCosts": 1717,
+    "totalCost": 270417,
+    "salePrice": 393385,
+    "profit": 122968
+  },
+  "retail": {
+    "salePrice": 393385,
+    "repairs": 94500,
+    "holdingMonths": 2,
+    "holdingCosts": 1717,
+    "sellingCosts": 28000,
+    "netToOwner": 269168,
+    "sellingCostsBasis": null
+  },
+  "activeListings": [],
+  "estimatesNote": "Insurance, closing, and selling costs are estimates.",
+  "researchedAt": "2026-09-25T15:00:00.000Z"
+}

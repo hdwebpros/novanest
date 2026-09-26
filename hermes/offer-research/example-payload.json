@@ -1,0 +1,233 @@
+{
+  "event": "ai_speakly.starred_conversation",
+  "locationId": "loc_example",
+  "conversation": {
+    "id": "conv_example_001",
+    "starred": true,
+    "lastMessageDate": "2026-09-24T18:12:00.000Z",
+    "lastMessageDirection": "inbound",
+    "lastMessageType": "TYPE_SMS",
+    "lastMessageBody": "Yeah the roof is old and the basement gets water in spring. What could you offer?"
+  },
+  "contact": {
+    "id": "contact_example_001",
+    "firstName": "Pat",
+    "lastName": "Example",
+    "fullName": "Pat Example",
+    "email": null,
+    "phone": "+16125550100",
+    "tags": [
+      "seller",
+      "ai-speakly"
+    ],
+    "dnd": false,
+    "source": "AI Speakly",
+    "dateAdded": "2026-09-20T14:00:00.000Z"
+  },
+  "property": {
+    "address": "6512 Example Ave S",
+    "city": "Richfield",
+    "state": "MN",
+    "postalCode": "55423",
+    "county": "Hennepin",
+    "apn": "27-028-24-00-0000"
+  },
+  "opportunity": {
+    "id": "opp_example_001",
+    "pipelineName": "Sellers",
+    "stageName": "Warm",
+    "status": "open",
+    "assignedTo": "Emily",
+    "monetaryValue": null
+  },
+  "messages": [
+    {
+      "id": "m1",
+      "direction": "outbound",
+      "type": "TYPE_SMS",
+      "date": "2026-09-24T17:55:00.000Z",
+      "body": "Hi Pat, it's Emily with NovaNest. Are you still thinking about selling the house on Example Ave?"
+    },
+    {
+      "id": "m2",
+      "direction": "inbound",
+      "type": "TYPE_SMS",
+      "date": "2026-09-24T18:12:00.000Z",
+      "body": "Yeah the roof is old and the basement gets water in spring. What could you offer?"
+    }
+  ],
+  "analysis": {
+    "needsEmilyAttention": true,
+    "actualOfferSent": false,
+    "actualOfferEvidence": null,
+    "excludeFromReport": false,
+    "excludeReason": null,
+    "leadSummary": "Owner open to selling, roof old, spring basement water.",
+    "recommendedNextAction": "Send offer link."
+  },
+  "research": {
+    "researchedAt": "2026-09-25T15:00:00.000Z",
+    "subject": {
+      "propertyType": "single_family",
+      "units": 1,
+      "beds": 3,
+      "baths": 2,
+      "totalFinishedSqft": 1450,
+      "aboveGradeFinishedSqft": 950,
+      "lotAcres": 0.17,
+      "yearBuilt": 1954,
+      "lastSale": {
+        "price": 142000,
+        "date": "2004-06-15"
+      },
+      "zillowUrl": "https://www.zillow.com/homedetails/example",
+      "annualTaxes": 4180,
+      "taxYear": 2026,
+      "countyUrl": "https://www.hennepin.us/example-parcel",
+      "ownerName": "Pat Example",
+      "ownerConfirmed": true,
+      "photos": [
+        "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200&q=80",
+        "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&q=80",
+        "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=1200&q=80"
+      ]
+    },
+    "condition": {
+      "summary": "Owner says the roof is old and the basement takes on water in spring.",
+      "knownIssues": [
+        "Old roof",
+        "Spring basement water"
+      ]
+    },
+    "saleComps": [
+      {
+        "address": "6620 Example Ave S, Richfield, MN",
+        "url": "https://www.zillow.com/homedetails/comp1",
+        "propertyType": "single_family",
+        "beds": 3,
+        "baths": 2,
+        "totalFinishedSqft": 1520,
+        "yearBuilt": 1956,
+        "soldPrice": 352000,
+        "soldDate": "2026-07-10",
+        "distanceMi": 0.2,
+        "note": null,
+        "photoUrl": "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&q=80"
+      },
+      {
+        "address": "6401 Sample St, Richfield, MN",
+        "url": "https://www.zillow.com/homedetails/comp2",
+        "propertyType": "single_family",
+        "beds": 3,
+        "baths": 2,
+        "totalFinishedSqft": 1380,
+        "yearBuilt": 1951,
+        "soldPrice": 329900,
+        "soldDate": "2026-05-22",
+        "distanceMi": 0.4,
+        "note": null,
+        "photoUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80"
+      },
+      {
+        "address": "7010 Demo Ln, Richfield, MN",
+        "url": "https://www.zillow.com/homedetails/comp3",
+        "propertyType": "single_family",
+        "beds": 3,
+        "baths": 2,
+        "totalFinishedSqft": 1600,
+        "yearBuilt": 1958,
+        "soldPrice": 371000,
+        "soldDate": "2026-03-03",
+        "distanceMi": 0.7,
+        "note": "Widened past 0.5 mi, only two matches inside it.",
+        "photoUrl": "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=1200&q=80"
+      },
+      {
+        "address": "6300 Test Rd, Richfield, MN",
+        "url": "https://www.zillow.com/homedetails/comp4",
+        "propertyType": "single_family",
+        "beds": 3,
+        "baths": 2,
+        "totalFinishedSqft": 1400,
+        "yearBuilt": 1972,
+        "soldPrice": 338500,
+        "soldDate": "2026-08-01",
+        "distanceMi": 0.45,
+        "note": "Built 18 years later but same layout and fully updated like a flipped subject would be.",
+        "photoUrl": "https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1200&q=80"
+      }
+    ],
+    "rentComps": [
+      {
+        "address": "6550 Example Ave S, Richfield, MN",
+        "url": "https://www.zillow.com/rental/r1",
+        "source": "zillow",
+        "propertyType": "single_family",
+        "beds": 3,
+        "baths": 2,
+        "monthlyRent": 2250,
+        "distanceMi": 0.1,
+        "date": "2026-09-01",
+        "note": null,
+        "photoUrl": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&q=80"
+      },
+      {
+        "address": "6440 Sample St, Richfield, MN",
+        "url": "https://www.zillow.com/rental/r2",
+        "source": "zillow",
+        "propertyType": "single_family",
+        "beds": 3,
+        "baths": 2,
+        "monthlyRent": 2150,
+        "distanceMi": 0.35,
+        "date": "2026-08-15",
+        "note": null,
+        "photoUrl": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80"
+      },
+      {
+        "address": "Rentometer 3bd/2ba within 0.5 mi",
+        "url": "https://www.rentometer.com/example",
+        "source": "rentometer",
+        "propertyType": "single_family",
+        "beds": 3,
+        "baths": 2,
+        "monthlyRent": 2200,
+        "distanceMi": 0.5,
+        "date": "2026-09-25",
+        "note": "Rentometer free median.",
+        "photoUrl": null
+      }
+    ],
+    "activeListings": [
+      {
+        "address": "6700 Demo Ln, Richfield, MN",
+        "url": "https://www.zillow.com/homedetails/l1",
+        "listPrice": 365000,
+        "beds": 3,
+        "baths": 2,
+        "totalFinishedSqft": 1500,
+        "daysOnMarket": 12,
+        "distanceMi": 0.5,
+        "photoUrl": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80"
+      }
+    ],
+    "estimates": {
+      "annualInsurance": {
+        "amount": 1900,
+        "basis": "Typical HO-3 for a 1950s Richfield SFH near this value",
+        "url": null
+      },
+      "buyerClosingCosts": {
+        "amount": 3500,
+        "basis": "Title, recording, lender fees at this price, no agent fees",
+        "url": null
+      },
+      "sellerCostsRetail": {
+        "amount": 24500,
+        "basis": "About 5.5% agent commission plus 1.5% seller closing and MN deed tax",
+        "url": null
+      }
+    }
+  },
+  "assumptions": {}
+}

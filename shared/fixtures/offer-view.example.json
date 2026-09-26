@@ -1,0 +1,191 @@
+{
+  "status": "active",
+  "createdAt": "2026-09-25T15:20:00.000Z",
+  "updatedAt": "2026-09-25T15:20:00.000Z",
+  "expiresAt": "2026-10-09T15:20:00.000Z",
+  "sellerFirstName": "Pat",
+  "property": {
+    "address": "6512 Example Ave S",
+    "city": "Richfield",
+    "state": "MN",
+    "postalCode": "55423",
+    "county": "Hennepin",
+    "propertyType": "single_family",
+    "units": 1,
+    "beds": 3,
+    "baths": 2,
+    "totalFinishedSqft": 1450,
+    "aboveGradeFinishedSqft": 950,
+    "lotAcres": 0.17,
+    "yearBuilt": 1954,
+    "annualTaxes": 4180,
+    "photos": [
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200&q=80",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&q=80",
+      "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=1200&q=80"
+    ]
+  },
+  "offer": 186000,
+  "fixedUpValue": {
+    "value": 342308,
+    "avgPricePerSqft": 236.07,
+    "comps": [
+      {
+        "address": "6620 Example Ave S, Richfield, MN",
+        "url": "https://www.zillow.com/homedetails/comp1",
+        "beds": 3,
+        "baths": 2,
+        "totalFinishedSqft": 1520,
+        "yearBuilt": 1956,
+        "soldPrice": 352000,
+        "soldDate": "2026-07-10",
+        "distanceMi": 0.2,
+        "photoUrl": "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&q=80",
+        "pricePerSqft": 231.58
+      },
+      {
+        "address": "6401 Sample St, Richfield, MN",
+        "url": "https://www.zillow.com/homedetails/comp2",
+        "beds": 3,
+        "baths": 2,
+        "totalFinishedSqft": 1380,
+        "yearBuilt": 1951,
+        "soldPrice": 329900,
+        "soldDate": "2026-05-22",
+        "distanceMi": 0.4,
+        "photoUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&q=80",
+        "pricePerSqft": 239.06
+      },
+      {
+        "address": "7010 Demo Ln, Richfield, MN",
+        "url": "https://www.zillow.com/homedetails/comp3",
+        "beds": 3,
+        "baths": 2,
+        "totalFinishedSqft": 1600,
+        "yearBuilt": 1958,
+        "soldPrice": 371000,
+        "soldDate": "2026-03-03",
+        "distanceMi": 0.7,
+        "photoUrl": "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=400&q=80",
+        "pricePerSqft": 231.88
+      },
+      {
+        "address": "6300 Test Rd, Richfield, MN",
+        "url": "https://www.zillow.com/homedetails/comp4",
+        "beds": 3,
+        "baths": 2,
+        "totalFinishedSqft": 1400,
+        "yearBuilt": 1972,
+        "soldPrice": 338500,
+        "soldDate": "2026-08-01",
+        "distanceMi": 0.45,
+        "photoUrl": "https://images.unsplash.com/photo-1449844908441-8829872d2607?w=400&q=80",
+        "pricePerSqft": 241.79
+      }
+    ]
+  },
+  "repairs": {
+    "total": 42750,
+    "perSqft": 45,
+    "sqft": 950,
+    "summary": "Owner says the roof is old and the basement takes on water in spring.",
+    "knownIssues": [
+      "Old roof",
+      "Spring basement water"
+    ]
+  },
+  "landlord": {
+    "purchasePrice": 186000,
+    "downPaymentPct": 0.2,
+    "downPayment": 37200,
+    "loanAmount": 148800,
+    "interestRate": 0.0725,
+    "loanTermYears": 30,
+    "closingCosts": 3500,
+    "rehab": 42750,
+    "holdingMonths": 3,
+    "holdingCosts": 4790,
+    "cashNeeded": 88240,
+    "monthly": {
+      "units": 1,
+      "rentPerUnit": 2200,
+      "grossRent": 2200,
+      "vacancy": 110,
+      "propertyMgmt": 110,
+      "maintenanceCapex": 110,
+      "mortgage": 1015.08,
+      "taxes": 348.33,
+      "insurance": 158.33,
+      "sewerTrash": 75,
+      "cashflow": 273.26
+    },
+    "cashflowPerUnit": 273.26,
+    "targetPerUnit": 500,
+    "meetsTarget": false,
+    "rentComps": [
+      {
+        "address": "6550 Example Ave S, Richfield, MN",
+        "url": "https://www.zillow.com/rental/r1",
+        "source": "zillow",
+        "beds": 3,
+        "baths": 2,
+        "monthlyRent": 2250,
+        "distanceMi": 0.1,
+        "photoUrl": null
+      },
+      {
+        "address": "6440 Sample St, Richfield, MN",
+        "url": "https://www.zillow.com/rental/r2",
+        "source": "zillow",
+        "beds": 3,
+        "baths": 2,
+        "monthlyRent": 2150,
+        "distanceMi": 0.35,
+        "photoUrl": null
+      },
+      {
+        "address": "Rentometer 3bd/2ba within 0.5 mi",
+        "url": "https://www.rentometer.com/example",
+        "source": "rentometer",
+        "beds": 3,
+        "baths": 2,
+        "monthlyRent": 2200,
+        "distanceMi": 0.5,
+        "photoUrl": null
+      }
+    ]
+  },
+  "flipper": {
+    "purchasePrice": 186000,
+    "closingCosts": 3500,
+    "rehab": 42750,
+    "holdingMonths": 2,
+    "holdingCosts": 1163,
+    "totalCost": 233413,
+    "salePrice": 342308,
+    "profit": 108895
+  },
+  "retail": {
+    "salePrice": 342308,
+    "repairs": 42750,
+    "holdingMonths": 2,
+    "holdingCosts": 1163,
+    "sellingCosts": 24500,
+    "netToOwner": 273895,
+    "sellingCostsBasis": "About 5.5% agent commission plus 1.5% seller closing and MN deed tax"
+  },
+  "activeListings": [
+    {
+      "address": "6700 Demo Ln, Richfield, MN",
+      "url": "https://www.zillow.com/homedetails/l1",
+      "listPrice": 365000,
+      "beds": 3,
+      "baths": 2,
+      "totalFinishedSqft": 1500,
+      "daysOnMarket": 12,
+      "photoUrl": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&q=80"
+    }
+  ],
+  "estimatesNote": "Insurance, closing, and selling costs are estimates.",
+  "researchedAt": "2026-09-25T15:00:00.000Z"
+}

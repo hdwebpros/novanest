@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/icon",
   ],
-  css: ["./app/assets/css/tailwind.css"],
+  css: ["~/assets/css/tailwind.css"],
   vite: {
     plugins: [tailwindcss()],
   },
@@ -29,5 +29,6 @@ export default defineNuxtConfig({
     googleServiceAccountEmail: "",
     googleServiceAccountPrivateKey: "",
     googlePropertiesFolderId: "",
+    offersApiSecret: "",
   },
 });
