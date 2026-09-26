@@ -12,7 +12,7 @@ metadata:
     config:
       - key: novanest.site_url
         description: "Base URL of the NovaNest site that hosts offer pages (no trailing slash)"
-        default: "https://novanest.homes"
+        default: "https://www.novanest.homes"
         prompt: "NovaNest site URL (confirm with Ryan)"
 required_environment_variables:
   - name: NOVANEST_OFFERS_API_SECRET
